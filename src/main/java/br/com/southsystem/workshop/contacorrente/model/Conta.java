@@ -28,4 +28,6 @@ public class Conta implements Serializable {
 
     @NotNull
     private String cpf;
+
+    private String nome;
 }

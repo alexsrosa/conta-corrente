@@ -7,19 +7,22 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ContaService {
 
     private final ContaRepository contaRepository;
+    private final CpfRemoteService cpfRemoteService;
 
-    public ContaService(ContaRepository contaRepository) {
+    public ContaService(ContaRepository contaRepository, CpfRemoteService cpfRemoteService) {
         this.contaRepository = contaRepository;
+        this.cpfRemoteService = cpfRemoteService;
     }
 
     public Conta save(Conta conta){
+        cpfRemoteService.findNomeByCpf(conta.getCpf())
+                .ifPresent(result -> conta.setNome(result.get("name")));
         return contaRepository.save(conta);
     }
 

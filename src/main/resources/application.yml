@@ -1,5 +1,32 @@
-
+server:
+  port: 8080
+spring:
+  application:
+    name: conta-corrente
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/workshop-springboot
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      config:
+        enabled: true
+        prefix: config
+        defaultContext: apps
+        profileSeparator: '::'
 
 security:
   basic:
-    enabled: true
+      enabled: ${security_enabled:false}
+  user:
+    name: test
+    password: test
+logging:
+  level:
+    root: ${logging_level:INFO}
+
+
+service:
+  spring-boot-demo:
+    url: http://localhost:9090/api/spring-boot-demo/cpf/{cpf}
